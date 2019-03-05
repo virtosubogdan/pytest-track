@@ -14,16 +14,19 @@ class Module(object):
         total = len(self.tests)
         ok = total - self.skipped_tests()
         for key, value in self.modules.items():
-            child_ok, child_total = value.stats
+            child_ok, child_total, _ = value.stats
             ok += child_ok
             total += child_total
-        self._stats = (ok, total)
+        self._stats = (ok, total, ok * 100 / total)
         return self._stats
 
     def status(self, indent=0):
-        ok, total = self.stats
+        ok, total, percentage = self.stats
         if self.name:
-            print("{}{}, tests {}/{}".format(" " * indent, self.name, ok, total))
+            prefix = "{}{},".format(" " * indent, self.name)
+        else:
+            prefix = "Total:"
+        print("{} {} from {} tests not skipped ({:.2f}%)".format(prefix, ok, total, percentage))
         for key, value in self.modules.items():
             value.status(indent + 2)
 

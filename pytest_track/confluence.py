@@ -21,8 +21,7 @@ def make_report_rows(module, indent=0):
     rows = []
     for (item_name, value) in module.modules.items():
         if isinstance(value, Module):
-            ok, total = value.stats
-            prc_ok = (ok * 100) / total
+            ok, total, prc_ok = value.stats
             name = " " * indent + escape(item_name.split("::")[-1])
             rows.append((name, "{}/{}".format(ok, total), prc_ok))
             rows.extend(make_report_rows(value, indent + 4))
@@ -39,4 +38,8 @@ def report_to_confluence(report, config):
     parent_id = track_config["confluence_parent_page_id"]
     rows = make_report_rows(report.tests)
     body = "<p>{}</p>".format(make_table(rows))
-    api.update_or_create(parent_id, "Pytest_track test", body=body)
+    page_title = track_config["confluence_page_title"]
+    response = api.update_or_create(parent_id, page_title, body=body)
+    links = response['_links']
+    page_url = '{}{}'.format(links['base'], links['webui'])
+    print('Page available at {}'.format(page_url))
