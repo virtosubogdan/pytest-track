@@ -7,7 +7,7 @@ with open("README.md", "r") as fh:
 
 s.setup(
     name="pytest-track",
-    version="0.1.0",
+    version="0.1.1",
     author="Virtosu Bogdan",
     author_email="virtosu.bogdan@gmail.com",
     long_description=long_description,
