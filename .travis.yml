@@ -2,7 +2,10 @@ language: python
 python: 3.6
 
 install:
-  - pip install tox
+  - pip install tox python-coveralls
 
 script:
   - tox -e check -s
+
+after_success:
+  - coveralls
