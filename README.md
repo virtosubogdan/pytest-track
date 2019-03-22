@@ -4,7 +4,8 @@ Pytest plugin for test reporting
 [![PyPI license](https://img.shields.io/pypi/l/pytest-track.svg)](https://pypi.org/project/pytest-track/)
 [![PyPI version](https://img.shields.io/pypi/v/pytest-track.svg)](https://pypi.org/project/pytest-track/)
 [![PyPI downloads](https://img.shields.io/pypi/dm/pytest-track.svg)](https://pypi.org/project/pytest-track/)
-
+[![Travis Build](https://img.shields.io/travis/virtosubogdan/pytest-track.svg)](https://travis-ci.org/virtosubogdan/pytest-track/)
+[![Coverage Status](https://coveralls.io/repos/github/virtosubogdan/pytest-track/badge.svg?branch=master)](https://coveralls.io/github/virtosubogdan/pytest-track?branch=master)
 
 Offers additional reporting options for tests status.
 
