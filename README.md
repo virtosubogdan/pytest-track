@@ -1,6 +1,11 @@
 Pytest plugin for test reporting
 ================================
 
+[![PyPI license](https://img.shields.io/pypi/l/pytest-track.svg)](https://pypi.org/project/pytest-track/)
+[![PyPI version](https://img.shields.io/pypi/v/pytest-track.svg)](https://pypi.org/project/pytest-track/)
+[![PyPI downloads](https://img.shields.io/pypi/dm/pytest-track.svg)](https://pypi.org/project/pytest-track/)
+
+
 Offers additional reporting options for tests status.
 
 
