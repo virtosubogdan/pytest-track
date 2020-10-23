@@ -1,8 +1,8 @@
 class Module(object):
-    def __init__(self, name):
+    def __init__(self, name, items=None, modules=None):
         self.name = name
-        self.tests = []
-        self.modules = {}
+        self.tests = items or []
+        self.modules = modules or {}
 
     def skipped_tests(self):
         return len([x for x in self.tests if x.is_skipped()])
@@ -30,6 +30,33 @@ class Module(object):
         for key, value in self.modules.items():
             value.status(indent + 2)
 
+    def store_json(self):
+        data = {'name': self.name}
+        if self.tests:
+            data['tests'] = [t.store_json() for t in self.tests]
+        if self.modules:
+            data['modules'] = [m.store_json() for m in self.modules.values()]
+        return data
+
+    @staticmethod
+    def load_json(data):
+        return Module(
+            name=data['name'],
+            items=map(ItemStatus.load_json, data.get('tests', [])),
+            modules=map(Module.load_json, data.get('modules', []))
+        )
+
+    def compare(self, module):
+        if self.name != module.name:
+            return False
+        for own_module, module in zip(self.modules.values(), module.modules.values()):
+            if own_module.compare(module):
+                return False
+        for own_test, test in zip(self.tests, module.tests):
+            if own_test.compare(test):
+                return False
+        return True
+
 
 class ItemStatus(object):
     def __init__(self, node_id, marks=None):
@@ -48,3 +75,17 @@ class ItemStatus(object):
 
     def __repr__(self):
         return self.__str__()
+
+    def store_json(self):
+        return {
+            'name': self.node_id
+        }
+
+    @staticmethod
+    def load_json(data):
+        return ItemStatus(data['name'])
+
+    def compare(self, test):
+        if self.name != test.name:
+            return False
+        return True

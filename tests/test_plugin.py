@@ -13,7 +13,7 @@ def test_configure_plugin():
 
 def test_configure_plugin_not_request():
     mock_config = mock.Mock()
-    mock_config.getoption.side_effect = lambda name: name != "track"
+    mock_config.getoption.side_effect = lambda name: False
     pytest_configure(mock_config)
     mock_config.pluginmanager.register.assert_not_called()
 
