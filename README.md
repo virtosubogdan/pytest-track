@@ -47,6 +47,13 @@ To use it
 
     pytest demo --track confluence
 
+Contrib
+-------
+
+Before PRs, only:
+
+    pre-commit install
+    tox
 
 Acknowledgements
 ----------------

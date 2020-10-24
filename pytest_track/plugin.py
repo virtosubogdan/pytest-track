@@ -50,11 +50,13 @@ def pytest_configure(config):
     if html_cov:
         data = None
         if config.getoption("html_cov_cache"):
-            logger.info('Using pytest-track HTML coverage cache')
-            data = config.cache.get('pytest-track-html-cache', {})
+            logger.info("Using pytest-track HTML coverage cache")
+            data = config.cache.get("pytest-track-html-cache", {})
         show_missed_elements = config.getoption("html_cov_show_elements")
         config._track_html = HTMLData(html_cov, data, show_missed_elements)
-        config.pluginmanager.register(config._track_html, name='pytest-track-html-coverage')
+        config.pluginmanager.register(
+            config._track_html, name="pytest-track-html-coverage"
+        )
 
 
 def pytest_unconfigure(config):
@@ -67,7 +69,7 @@ def html_coverate_unconfigure(config):
     if not html_cov:
         return
     html_cov.stats()
-    config.cache.set('pytest-track-html-coverage', html_cov.to_json())
+    config.cache.set("pytest-track-html-coverage", html_cov.to_json())
     del config._track_html
     config.pluginmanager.unregister(html_cov)
 
@@ -83,17 +85,17 @@ def track_unconfigure(config):
         # track.tests.status()
         pass
     key = datetime.now().microsecond
-    data = config.cache.get('pytest-track', {})
+    data = config.cache.get("pytest-track", {})
     if data:
         latest = max(data.keys())
         old_result = data[latest]
         old_module = Module.load_json(old_result)
         changed = old_module.compare(track.tests)
         if not changed:
-            print('Status not changed. Removing old status')
+            print("Status not changed. Removing old status")
             del data[latest]
     data[key] = track.tests.store_json()
-    config.cache.set('pytest-track', data)
+    config.cache.set("pytest-track", data)
     del config._track
     config.pluginmanager.unregister(track)
 

@@ -26,24 +26,28 @@ class Module(object):
             prefix = "{}{},".format(" " * indent, self.name)
         else:
             prefix = "Total:"
-        print("{} {} from {} tests not skipped ({:.2f}%)".format(prefix, ok, total, percentage))
+        print(
+            "{} {} from {} tests not skipped ({:.2f}%)".format(
+                prefix, ok, total, percentage
+            )
+        )
         for key, value in self.modules.items():
             value.status(indent + 2)
 
     def store_json(self):
-        data = {'name': self.name}
+        data = {"name": self.name}
         if self.tests:
-            data['tests'] = [t.store_json() for t in self.tests]
+            data["tests"] = [t.store_json() for t in self.tests]
         if self.modules:
-            data['modules'] = [m.store_json() for m in self.modules.values()]
+            data["modules"] = [m.store_json() for m in self.modules.values()]
         return data
 
     @staticmethod
     def load_json(data):
         return Module(
-            name=data['name'],
-            items=map(ItemStatus.load_json, data.get('tests', [])),
-            modules=map(Module.load_json, data.get('modules', []))
+            name=data["name"],
+            items=map(ItemStatus.load_json, data.get("tests", [])),
+            modules=map(Module.load_json, data.get("modules", [])),
         )
 
     def compare(self, module):
@@ -58,7 +62,7 @@ class Module(object):
         return True
 
 
-class ItemStatus(object):
+class ItemStatus:
     def __init__(self, node_id, marks=None):
         self.node_id = node_id
         self.marks = marks
@@ -77,13 +81,11 @@ class ItemStatus(object):
         return self.__str__()
 
     def store_json(self):
-        return {
-            'name': self.node_id
-        }
+        return {"name": self.node_id}
 
     @staticmethod
     def load_json(data):
-        return ItemStatus(data['name'])
+        return ItemStatus(data["name"])
 
     def compare(self, test):
         if self.name != test.name:

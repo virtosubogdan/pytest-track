@@ -12,7 +12,7 @@ def test_table_making():
 
 
 def test_make_rows(simple_module):
-    expected_rows = [('test_module', '1/2', 50.0)]
+    expected_rows = [("test_module", "1/2", 50.0)]
     assert make_report_rows(simple_module) == expected_rows
 
 

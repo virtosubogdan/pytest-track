@@ -40,6 +40,6 @@ def report_to_confluence(report, config):
     body = "<p>{}</p>".format(make_table(rows))
     page_title = track_config["confluence_page_title"]
     response = api.update_or_create(parent_id, page_title, body=body)
-    links = response['_links']
-    page_url = '{}{}'.format(links['base'], links['webui'])
-    print('Page available at {}'.format(page_url))
+    links = response["_links"]
+    page_url = "{}{}".format(links["base"], links["webui"])
+    print("Page available at {}".format(page_url))
